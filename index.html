@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS iOS</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+:root{
+  --sage:#ACBDAA;
+  --navy:#1E2D4C;
+  --gray:#858585;
+  --bg:#F3F5F1;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Inter",sans-serif;
+  background:var(--bg);
+  color:var(--navy);
+}
+
+/* BUTTON */
+.btn-main{
+  background:linear-gradient(135deg,#1E2D4C,#2C3E66);
+  color:#fff;
+  border-radius:999px;
+  padding:18px 28px;
+  font-weight:800;
+  box-shadow:0 18px 45px rgba(30,45,76,.45);
+  transition:.35s;
+}
+.btn-main:hover{
+  transform:translateY(-4px);
+  box-shadow:0 30px 70px rgba(30,45,76,.6);
+}
+
+.btn-sub{
+  background:var(--sage);
+  border-radius:999px;
+  padding:16px 26px;
+  font-weight:700;
+  transition:.3s;
+}
+.btn-sub:hover{transform:translateY(-2px)}
+
+.toggle{
+  cursor:pointer;
+  font-weight:600;
+  transition:.3s;
+}
+.toggle:hover{opacity:.7}
+
+.hidden-soft{
+  opacity:0;
+  transform:translateY(16px);
+  pointer-events:none;
+  transition:.35s;
+}
+.show-soft{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* KHÓA CUỘN BODY KHI MỞ MODAL */
+body.modal-open{
+  overflow:hidden;
+  height:100vh;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="bg-white/80 backdrop-blur border-b">
+  <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-[color:var(--navy)] text-white flex items-center justify-center font-bold">
+        
+      </div>
+      <span class="font-bold text-lg">DNS iOS</span>
+    </div>
+    <span class="text-sm text-gray-500">Cấu hình cao cấp</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="max-w-4xl mx-auto px-6 py-24 text-center">
+  <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+    DNS LOCKET<br>tối ưu cho iOS
+  </h1>
+
+  <p class="text-[color:var(--gray)] mb-12 leading-relaxed">
+    Cài đặt 1 chạm • Không quảng cáo • Không cần đăng nhập<br>
+    Tối ưu tốc độ & bảo mật cho iPhone, iPad
+  </p>
+
+  <div class="flex flex-col sm:flex-row gap-5 justify-center">
+    <button id="downloadBtn" class="btn-main">
+      ⬇️ Tải cấu hình iOS
+    </button>
+    <button onclick="openGuide()" class="btn-sub">
+      📖 Hướng dẫn
+    </button>
+  </div>
+</section>
+
+<!-- MODULE -->
+<section class="text-center pb-20">
+  <p class="toggle mb-4" onclick="toggleModule()">
+    👁️ Module Shadowrocket
+  </p>
+
+  <div id="moduleBox" class="hidden-soft">
+    <input
+      id="module"
+      readonly
+      onclick="copyText()"
+      class="w-full max-w-md mx-auto px-6 py-4 rounded-full bg-white shadow text-center cursor-pointer"
+      placeholder="Đang tải module..."
+    >
+    <p id="msg" class="text-sm text-gray-500 mt-2">
+      Nhấn để sao chép
+    </p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bg-white py-20">
+  <div class="max-w-3xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-12">Câu hỏi thường gặp</h2>
+
+    <div class="space-y-6">
+      <details class="bg-[var(--bg)] rounded-2xl p-6">
+        <summary class="font-semibold cursor-pointer">
+          Cấu hình này có an toàn không?
+        </summary>
+        <p class="text-gray-600 mt-3">
+          Có. Không thu thập dữ liệu cá nhân, chỉ tối ưu DNS cho iOS.
+        </p>
+      </details>
+
+      <details class="bg-[var(--bg)] rounded-2xl p-6">
+        <summary class="font-semibold cursor-pointer">
+          Có cần đăng nhập không?
+        </summary>
+        <p class="text-gray-600 mt-3">
+          Không. Chỉ cần cài là dùng.
+        </p>
+      </details>
+
+      <details class="bg-[var(--bg)] rounded-2xl p-6">
+        <summary class="font-semibold cursor-pointer">
+          iPad dùng được không?
+        </summary>
+        <p class="text-gray-600 mt-3">
+          Có. Hỗ trợ iPhone & iPad.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="py-20 text-center">
+  <h2 class="text-3xl font-bold mb-6">Hỗ trợ & Liên hệ</h2>
+  <p class="text-gray-600 mb-10">Gặp vấn đề? Liên hệ ngay</p>
+
+  <div class="flex justify-center gap-6 flex-wrap">
+    <a href="https://m.me/hihnhaiien" target="_blank" class="btn-sub">💬 Messenger</a>
+    <a href="https://zalo.me/0969183022" target="_blank" class="btn-sub">📱 Zalo</a>
+    <a href="https://t.me/huokvdxx" target="_blank" class="btn-sub">✈️ Telegram</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[color:var(--navy)] text-white">
+  <div class="max-w-6xl mx-auto px-6 py-8 text-center text-sm opacity-80">
+    © 2026 CHAU DIEP ANH • DNS iOS Service
+  </div>
+</footer>
+
+<!-- MODAL HƯỚNG DẪN -->
+<div id="guide" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-black/60">
+
+  <div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl
+              max-h-[90vh] overflow-hidden flex flex-col">
+
+    <!-- HEADER -->
+    <div class="px-8 py-6 border-b text-center">
+      <h3 class="text-2xl font-extrabold text-[color:var(--navy)]">
+        HƯỚNG DẪN CÀI ĐẶT & SỬ DỤNG
+      </h3>
+    </div>
+
+    <!-- BODY SCROLL -->
+    <div class="px-8 py-6 overflow-y-auto space-y-8 text-[color:var(--navy)]">
+
+      <div class="bg-[var(--bg)] rounded-2xl p-6">
+        <p class="font-bold text-lg mb-4">I. Yêu cầu hệ thống</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>📱 iPhone / iPad (iOS 13+)</li>
+          <li>🌐 Kết nối Internet ổn định</li>
+          <li>🔒 Không bị quản lý MDM</li>
+        </ul>
+      </div>
+
+      <div class="bg-[var(--bg)] rounded-2xl p-6">
+        <p class="font-bold text-lg mb-4">II. Các bước cài đặt</p>
+        <ol class="space-y-3 text-gray-700 list-decimal list-inside">
+          <li>Nhấn <b>Tải cấu hình iOS</b></li>
+          <li>Chọn <b>Cho phép</b></li>
+          <li>Vào <b>Cài đặt → Hồ sơ đã tải</b></li>
+          <li>Chọn <b>Locket Gold → Cài đặt</b></li>
+          <li>Nhập mật khẩu và xác nhận</li>
+        </ol>
+        <p class="mt-4 font-semibold text-green-600">
+          ✅ Hiện “Đã cài đặt” là xong
+        </p>
+      </div>
+
+      <div class="bg-[var(--bg)] rounded-2xl p-6">
+        <p class="font-bold text-lg mb-4">III. Sau khi cài</p>
+        <ul class="space-y-2 text-gray-700">
+          <li>🔌 Tắt VPN / Proxy</li>
+          <li>📲 Mở app Locket sử dụng bình thường</li>
+          <li>♻️ Thoát app mở lại nếu chưa hiệu lực</li>
+        </ul>
+      </div>
+
+      <div class="bg-red-50 rounded-2xl p-6">
+        <p class="font-bold text-lg mb-4 text-red-600">IV. Lỗi thường gặp</p>
+        <ul class="space-y-3 text-gray-700">
+          <li>❌ Không thấy hồ sơ → dùng Safari</li>
+          <li>❌ Không cài được → máy bị MDM</li>
+          <li>❌ Không hiệu lực → khởi động lại máy</li>
+        </ul>
+      </div>
+
+      <div class="bg-[var(--bg)] rounded-2xl p-6">
+        <p class="font-bold text-lg mb-3">V. Hỗ trợ</p>
+        <p class="text-gray-700">
+          Nếu gặp lỗi, hãy liên hệ admin để được hỗ trợ nhanh nhất.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="px-8 py-6 border-t">
+      <button onclick="closeGuide()"
+        class="w-full py-4 rounded-2xl font-bold text-lg
+        bg-[color:var(--navy)] text-white hover:opacity-90">
+        Đóng hướng dẫn
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script src="assets/secure.js"></script>
+
+<script>
+let show = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.__DL__) {
+    downloadBtn.onclick = () => location.href = __DL__;
+  }
+  if (window.__MODULE__) {
+    module.value = __MODULE__;
+  }
+});
+
+function toggleModule(){
+  show = !show;
+  moduleBox.className = show ? "show-soft" : "hidden-soft";
+}
+
+function copyText(){
+  navigator.clipboard.writeText(module.value);
+  msg.textContent = "Đã sao chép!";
+  setTimeout(() => msg.textContent = "Nhấn để sao chép", 2000);
+}
+
+function openGuide(){
+  guide.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
+function closeGuide(){
+  guide.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+}
+</script>
+
+</body>
+</html>
